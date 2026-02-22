@@ -1,13 +1,35 @@
 import json
 import logging
+from datetime import datetime
 
-# Configuração simples de log para visualizar quando o fallback entra em ação
-logging.basicConfig(level=logging.WARNING, format='%(levelname)s: %(message)s')
+# Desativa logs padrão do Python no terminal para usarmos o nosso formato limpo
+logging.basicConfig(level=logging.INFO, format='%(message)s')
+
+# Definimos o nome do arquivo onde o histórico será salvo
+ARQUIVO_LOG = "classificador.log"
+
+def log_estruturado(nivel, evento, detalhes):
+    """Gera um log no formato JSON e anexa (append) no arquivo de log."""
+    log_entry = {
+        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "level": nivel.upper(),
+        "event": evento,
+        "details": detalhes
+    }
+    
+    # Transforma o dicionário em texto JSON mantendo a acentuação correta
+    json_string = json.dumps(log_entry, ensure_ascii=False)
+    
+    # Abre o arquivo no modo "a" (append/adicionar) e escreve a nova linha
+    with open(ARQUIVO_LOG, "a", encoding="utf-8") as arquivo:
+        arquivo.write(json_string + "\n")
 
 def parse_json_response(texto_resposta):
-
+    """
+    Tenta converter a string do LLM em um dicionário Python.
+    Remove marcações de código Markdown (```json) se existirem.
+    """
     try:
-        # LLMs costumam retornar o JSON dentro de blocos de código Markdown
         texto_limpo = texto_resposta.strip()
         if texto_limpo.startswith("```json"):
             texto_limpo = texto_limpo[7:]
@@ -16,34 +38,45 @@ def parse_json_response(texto_resposta):
             
         return json.loads(texto_limpo.strip())
     
-    except json.JSONDecodeError as e:
-        logging.error(f"Falha ao realizar o parse do JSON: {e}. Texto original: '{texto_resposta}'")
-        return None
     except Exception as e:
-        logging.error(f"Erro inesperado no parser: {e}")
+        log_estruturado("ERROR", "falha_parse_json", {"erro": str(e), "texto_cru": texto_resposta})
         return None
 
 def validar_categoria(dados_json, categorias_permitidas):
-
+    """
+    Garante que a chave 'categoria' existe e que o valor não foi inventado pela IA.
+    """
     if not isinstance(dados_json, dict) or "categoria" not in dados_json:
-        logging.warning("Formato JSON incorreto ou chave 'categoria' ausente.")
+        log_estruturado("WARNING", "formato_invalido", {"dados": dados_json})
         return False
         
     categoria = dados_json.get("categoria")
     if categoria not in categorias_permitidas:
-        logging.warning(f"Alucinação detectada! A categoria '{categoria}' não está na lista permitida.")
+        log_estruturado("WARNING", "alucinacao_detectada", {"categoria_inventada": categoria})
         return False
         
     return True
 
 def processar_resposta_com_fallback(texto_resposta, categorias_permitidas, fallback="Geral"):
-
+    """
+    Orquestra o fluxo: tenta processar, tenta validar e, se algo falhar, retorna o fallback.
+    Também extrai o score de confiança gerado pelo modelo.
+    """
     dados_json = parse_json_response(texto_resposta)
     
     # Se o JSON for válido e a categoria existir na lista
     if validar_categoria(dados_json, categorias_permitidas):
-        return dados_json["categoria"]
+        # Captura o score de confiança. Se a IA esquecer de enviar, define como 0.0
+        confianca = dados_json.get("confianca", 0.0)
+        
+        log_estruturado("INFO", "classificacao_sucesso", {
+            "categoria": dados_json["categoria"],
+            "confianca": confianca
+        })
+        
+        # Retorna o dicionário completo com categoria e confiança
+        return {"categoria": dados_json["categoria"], "confianca": confianca}
     
     # Se falhou no parse ou na validação, aciona o fallback
-    logging.warning(f"Acionando fallback seguro. Retornando categoria: '{fallback}'")
-    return fallback
+    log_estruturado("WARNING", "fallback_acionado", {"fallback": fallback})
+    return {"categoria": fallback, "confianca": 0.0}

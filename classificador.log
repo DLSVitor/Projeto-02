@@ -1,0 +1,6 @@
+{"timestamp": "2026-02-22T06:45:48.948874Z", "level": "INFO", "event": "classificacao_sucesso", "details": {"categoria": "Financeiro", "confianca": 0.98}}
+{"timestamp": "2026-02-22T06:45:50.289032Z", "level": "INFO", "event": "classificacao_sucesso", "details": {"categoria": "Suporte", "confianca": 0.98}}
+{"timestamp": "2026-02-22T06:45:51.633191Z", "level": "INFO", "event": "classificacao_sucesso", "details": {"categoria": "Vendas", "confianca": 0.98}}
+{"timestamp": "2026-02-22T06:45:52.967305Z", "level": "INFO", "event": "classificacao_sucesso", "details": {"categoria": "Geral", "confianca": 0.99}}
+{"timestamp": "2026-02-22T06:45:54.306381Z", "level": "INFO", "event": "classificacao_sucesso", "details": {"categoria": "Financeiro", "confianca": 0.98}}
+{"timestamp": "2026-02-22T06:45:55.667999Z", "level": "INFO", "event": "classificacao_sucesso", "details": {"categoria": "Geral", "confianca": 0.99}}
