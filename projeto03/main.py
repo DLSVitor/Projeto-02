@@ -30,10 +30,9 @@ def main():
             
         # --- CAMADA DE SEGURANÇA: Proteção contra Prompt Injection ---
         if is_prompt_injection(query):
-            print("\n\033[91m[Aviso de Segurança]: Tentativa de manipulação de prompt detectada. Acesso negado.\033[0m")
             continue # Pula o resto do código e pede uma nova pergunta
         # 1. Busca os trechos mais relevantes usando matemática (similaridade de cosseno)
-        contexto = vector_search(query, memory, client, top_k=4)
+        contexto = vector_search(query, memory, client, top_k=6)
         
         # 2. Prepara os prompts
         system_prompt = build_system_prompt()
