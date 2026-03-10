@@ -2,10 +2,10 @@ import json
 import logging
 from datetime import datetime
 
-# Desativa logs padrão do Python no terminal para usarmos o nosso formato limpo
+# Desativa logs padrão do Python no terminal
 logging.basicConfig(level=logging.INFO, format='%(message)s')
 
-# Definimos o nome do arquivo onde o histórico será salvo
+# arquivo externo com as logs
 ARQUIVO_LOG = "classificador.log"
 
 def log_estruturado(nivel, evento, detalhes):
@@ -17,10 +17,9 @@ def log_estruturado(nivel, evento, detalhes):
         "details": detalhes
     }
     
-    # Transforma o dicionário em texto JSON mantendo a acentuação correta
+    # Dicionário para JSON
     json_string = json.dumps(log_entry, ensure_ascii=False)
     
-    # Abre o arquivo no modo "a" (append/adicionar) e escreve a nova linha
     with open(ARQUIVO_LOG, "a", encoding="utf-8") as arquivo:
         arquivo.write(json_string + "\n")
 

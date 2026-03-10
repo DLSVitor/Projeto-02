@@ -4,3 +4,4 @@ groq
 numpy
 PyPDF2
 python-docx
+sentence-transformers

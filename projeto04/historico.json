@@ -1,0 +1,70 @@
+[
+    {
+        "role": "system",
+        "content": "Você é um assistente virtual muito prestativo e com um senso de humor um pouco sarcástico. REGRAS ESTRITAS PARA O USO DE FERRAMENTAS:\n1. NUNCA invente, adivinhe ou presuma valores para os parâmetros das funções.\n2. Se o usuário pedir para calcular o IMC (ou usar qualquer outra ferramenta) e não fornecer os dados obrigatórios (peso e altura), VOCÊ DEVE PERGUNTAR os dados que faltam ANTES de tentar chamar a função.\n3. Apenas chame a ferramenta quando tiver 100% dos dados necessários fornecidos pelo usuário."
+    },
+    {
+        "role": "user",
+        "content": "gerar nova senha de 20 caracteres"
+    },
+    {
+        "role": "assistant",
+        "content": "",
+        "tool_calls": [
+            {
+                "id": "xj6v2z6vz",
+                "function": {
+                    "arguments": "{\"tamanho\":20}",
+                    "name": "gerar_senha"
+                },
+                "type": "function"
+            }
+        ]
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "xj6v2z6vz",
+        "name": "gerar_senha",
+        "content": "Sua senha gerada é: bkGG71g22GNlTZl%6Orj"
+    },
+    {
+        "role": "assistant",
+        "content": "Sua senha gerada é: bkGG71g22GNlTZl%6Orj\n\nLembre-se de que é importante não compartilhar senhas e manter segurança online. Se precisar de mais ajuda ou tiver alguma dúvida, estou aqui para ajudar!"
+    },
+    {
+        "role": "user",
+        "content": "imc 1.80 80kg"
+    },
+    {
+        "role": "assistant",
+        "content": "",
+        "tool_calls": [
+            {
+                "id": "0d0h8c1r5",
+                "function": {
+                    "arguments": "{\"altura\":1.8,\"peso\":80}",
+                    "name": "calcular_imc"
+                },
+                "type": "function"
+            }
+        ]
+    },
+    {
+        "role": "tool",
+        "tool_call_id": "0d0h8c1r5",
+        "name": "calcular_imc",
+        "content": "Seu IMC é 24.69"
+    },
+    {
+        "role": "assistant",
+        "content": "Seu IMC é 24.69. Isso significa que você está dentro do peso ideal, de acordo com a classificação do IMC da Organização Mundial da Saúde (OMS).\n\nLembre-se de que o IMC é apenas uma ferramenta para avaliar o peso corporal e não leva em conta outros fatores importantes, como a composição corporal e a saúde geral. Se você tiver alguma dúvida ou preocupação sobre sua saúde, é sempre melhor consultar um profissional de saúde.\n\nAgora, se você quiser saber mais sobre como melhorar sua saúde ou precisar de dicas de nutrição, estou aqui para ajudar!"
+    },
+    {
+        "role": "user",
+        "content": "dicas de nutrição"
+    },
+    {
+        "role": "assistant",
+        "content": "Excelente escolha! Aqui vão algumas dicas de nutrição saudáveis:\n\n1. **Coma uma variedade de alimentos**: Inclua uma variedade de frutas, legumes, cereais integrais, protéinas magras e gorduras saudáveis em sua dieta.\n2. **Hidrate-se**: Beba pelo menos 2 litros de água por dia para manter seu corpo hidratado.\n3. **Evite alimentos processados**: Alimentos processados tendem a ser ricos em calorias, açúcar e gordura, e pobres em nutrientes essenciais.\n4. **Coma mais fibras**: As fibras podem ajudar a reduzir o colesterol, controlar o açúcar no sangue e promover a saúde digestiva.\n5. **Inclua fontes de ômega-3**: O ômega-3 é importante para a saúde do coração e do cérebro. Encontre-o em peixes gordurosos, nozes e sementes.\n6. **Limite o consumo de açúcar**: O açúcar adicionado pode aumentar o risco de doenças crônicas, como diabetes e doenças cardíacas.\n7. **Coma mais proteínas**: As proteínas são importantes para a saúde muscular e óssea. Encontre-as em carnes magras, peixes, ovos, laticínios e legumes.\n8. **Inclua fontes de cálcio**: O cálcio é importante para a saúde óssea. Encontre-o em laticínios, leafy greens e fortificados com cálcio.\n9. **Coma mais frutas e legumes**: As frutas e legumes são ricas em vitaminas, minerais e antioxidantes.\n10. **Consulte um nutricionista**: Se você tiver alguma dúvida ou preocupação sobre sua dieta, consulte um nutricionista registrado para obter orientação personalizada.\n\nLembre-se de que uma dieta saudável é apenas uma parte de uma vida saudável. Também é importante fazer exercícios regulares, dormir bem e gerenciar o estresse.\n\nAgora, se você quiser saber mais sobre como melhorar sua saúde ou precisar de dicas de exercícios, estou aqui para ajudar!"
+    }
+]

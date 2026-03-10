@@ -2,6 +2,7 @@ from llm_client import LLMClient
 from retriever import load_conhecimento, build_vector_memory, vector_search
 from validator import validate_json, is_prompt_injection
 from prompt import build_system_prompt
+from classifier import classificar_mensagem
 
 def main():
     provider = input("Escolha o provedor (openai/groq): ").strip().lower()
@@ -28,6 +29,9 @@ def main():
         if not query:
             continue
             
+        triagem = classificar_mensagem(query)
+        print(f"[Triagem]: Categoria → {triagem['categoria']} | Confiança → {triagem['confianca']*100:.1f}%")
+        
         # --- CAMADA DE SEGURANÇA: Proteção contra Prompt Injection ---
         if is_prompt_injection(query):
             continue # Pula o resto do código e pede uma nova pergunta

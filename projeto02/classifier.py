@@ -4,7 +4,6 @@ from validator import processar_resposta_com_fallback
 CATEGORIAS = ["Suporte", "Vendas", "Financeiro", "Geral"]
 
 def classificar_mensagem(mensagem, temperature=0.2):
-    # Prompt atualizado pedindo a nota de confiança
     prompt = f"""
         Você é um assistente de triagem de atendimento ao cliente.
         Classifique a mensagem abaixo em EXATAMENTE UMA das seguintes categorias: {', '.join(CATEGORIAS)}.
